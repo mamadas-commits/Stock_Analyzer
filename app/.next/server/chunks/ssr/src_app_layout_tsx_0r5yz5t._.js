@@ -1,0 +1,3 @@
+module.exports=[27572,a=>{"use strict";var b=a.i(7997);a.s(["default",0,function({children:a}){return(0,b.jsxs)("html",{lang:"cs",suppressHydrationWarning:!0,children:[(0,b.jsx)("head",{children:(0,b.jsx)("script",{dangerouslySetInnerHTML:{__html:'try{var t=localStorage.getItem("stocksanalyzer.theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}'}})}),(0,b.jsx)("body",{children:a})]})},"metadata",0,{title:"Stocks Analyzer",description:"Lokální analýza akcií z dat SEC EDGAR a denní historie cen."}])},50645,function(a){a.n(a.i(27572))}];
+
+//# sourceMappingURL=src_app_layout_tsx_0r5yz5t._.js.map

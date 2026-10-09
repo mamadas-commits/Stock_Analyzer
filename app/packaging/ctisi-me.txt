@@ -1,0 +1,135 @@
+STOCKS ANALYZER
+===============
+
+Lokální analýza akcií: ceny, uzávěrky ze SEC, grafy, porovnání s konkurencí,
+simulace portfolia. Všechno běží u tebe na počítači, data leží v jednom
+souboru. Ven se chodí jen pro data ze SEC a od poskytovatele cen.
+
+
+JAK TO SPUSTIT
+--------------
+
+Na Windows ZIP nejdřív celý rozbal (pravým tlačítkem > Extrahovat vše),
+nejlépe do krátké cesty, třeba C:\stocksanalyzer. Nespouštěj nic přímo
+z otevřeného ZIPu: Windows pak rozbaluje přes dočasnou složku s dlouhou
+cestou a některé soubory nemusí zvládnout.
+
+Windows    dvojklik na  Spustit.cmd
+macOS      dvojklik na  Spustit.command
+Linux      v terminálu  ./spustit.sh
+
+Prohlížeč se otevře sám na http://127.0.0.1:3111. Aplikace poslouchá jen na
+tvém počítači, z jiného stroje v síti se k ní nikdo nedostane.
+
+Vypnout: Ctrl+C v okně, které se spuštěním otevřelo (nebo okno zavřít).
+
+Node.js instalovat NEMUSÍŠ, je přibalený v adresáři runtime/.
+
+
+PRVNÍ SPUŠTĚNÍ
+--------------
+
+Otevři záložku "Nastavení" a vyplň kontaktní e-mail. SEC ho vyžaduje
+v hlavičce každého požadavku a bez něj nepustí ani jeden — proto to nejde
+přeskočit. Nikam se neposílá, jen se posílá SEC jako podpis.
+
+Klíč od Tiinga (zdarma po registraci na tiingo.com) doporučuju doplnit hned.
+Bez něj se ceny stahují z Yahoo, které nárazově limituje podle IP adresy.
+
+Vedle každého pole je tlačítko "Otestovat", které hodnotu rovnou uloží
+a vyzkouší. Soubor .env.local vznikne při prvním uložení.
+
+
+PŘIDÁVÁNÍ FIREM
+---------------
+
+Jednu firmu přidáš v záložce "Data a stahování". Víc najednou přes tlačítko
+"Hromadné přidání symbolů" nahoře vedle "Zobrazit seznam" — vypiš symboly
+oddělené čárkou nebo mezerou (nejvýš 50) a stáhnou se uzávěrky i ceny.
+Poskytovatelé cen mají hodinové limity; když dojdou, appka se pro zbytek
+vrací sama každých 20 minut, dokud ceny nemají všichni. Stav vidíš pod
+výběrem firmy, dá se zastavit.
+
+
+CO KDE JE
+---------
+
+app/         program.
+runtime/     přibalený Node.js.
+data/        tvoje data — databáze, archiv výkazů, zálohy. Sem se nesahá.
+.env.local   tvoje klíče. Vznikne, jakmile uložíš Nastavení. Sem se taky nesahá.
+puvodni/     jen u zdrojové instalace (viz níž). Nedotýkat se.
+
+Zálohovat stačí adresář data/ a soubor .env.local.
+
+
+CHCI SI DO TOHO NĚCO DOPSAT
+---------------------------
+
+Podívej se, jestli máš adresář  app/src  . Když ano, dostal jsi zdrojovou
+instalaci a celý program máš v ruce — můžeš ho měnit. Když ne, máš přeloženou
+verzi, kterou upravit nejde; řekni si o zdrojovou.
+
+Nic instalovat nemusíš, ani npm. Uprav soubor, spusť aplikaci jako obvykle
+a spouštěč si všimne, že se zdroják změnil, a přeloží ho (asi minuta). Když
+uděláš chybu, překlad neprojde — v okně je napsané kde, aplikace se mezitím
+spustí v předchozí podobě a nic se nerozbije.
+
+Vlastní funkce dávej do  app/src/rozsireni/  , jedna funkce jeden soubor.
+Návod s příklady je tam v README.md. Má to jeden praktický důvod: soubor,
+který tam založíš, nemůže žádná aktualizace přepsat, protože o něm neví.
+
+
+AKTUALIZACE
+-----------
+
+Přijde ti soubor  aktualizace-<verze>.zip  — polož ho vedle tohohle souboru a:
+
+Windows    dvojklik na  Aktualizovat.cmd
+macOS/Linux  v terminálu  ./aktualizovat.sh
+
+Před zápisem se ověří kontrolní součet každého souboru a zazálohují se pozice
+portfolia, deník nákupů, watchlist, sestavy grafů a analýzy rizik do
+data/zalohy/. Stažené ceny a výkazy
+zůstanou tak, jak jsou — aktualizace na ně vůbec nesahá.
+
+Máš-li zdrojovou instalaci a něco sis v ní upravil, aktualizace tvoje úpravy
+nepřepíše: sloučí je s novou verzí. Kde jsme každý sáhli jinam, zůstane obojí.
+Kde jsme sáhli na totéž místo, zůstane tvoje verze a nová se položí vedle se
+jménem ...nova — updater na konci vypíše, kterých souborů se to týká. Nic
+nemusíš dělat hned, aplikace běží dál.
+
+Aplikace by při tom neměla běžet.
+
+Když updater napíše, že aktualizaci použít nejde (třeba máš "hotovou
+aplikaci" a balík je "zdroják", nebo je potřeba nová verze Node), stačí
+přejít na nový kompletní balík. Tvoje data se přenesou:
+
+  1. Aplikaci vypni.
+  2. Nový ZIP rozbal do nové složky (krátká cesta, např. C:\stocksanalyzer2).
+  3. Ze staré složky zkopíruj do nové adresář  data  a soubor  .env.local.
+  4. Spusť novou verzi. Až ověříš, že je vše na místě, starou složku smaž.
+
+
+KDYŽ TO NEJDE
+-------------
+
+"Windows ochránil váš počítač" (SmartScreen)
+    Klikni na "Další informace" → "Přesto spustit". Je to tím, že .cmd soubor
+    není podepsaný, ne tím, že by v něm něco bylo.
+
+macOS: "nelze otevřít, protože pochází od neověřeného vývojáře"
+    Spustit.command si to řeší sám. Když ne, v terminálu:
+    xattr -dr com.apple.quarantine /cesta/k/adresari
+
+Port 3111 je obsazený
+    Spouštěč si sám najde první volný a napíše, který používá.
+
+Ceny se nestahují
+    Bez klíče od Tiinga se zkouší Yahoo, které limituje podle IP adresy a dělá
+    to nárazově. Uzávěrky ze SEC se stahují nezávisle, takže firma se stáhne
+    i bez cen a ceny se doplní později tlačítkem "Doplnit chybějící ceny".
+
+Chat s analytikem hlásí, že chybí Claude Code
+    Tahle záložka spouští příkaz `claude` a čerpá z předplatného Claude Code.
+    Bez něj funguje zbytek aplikace normálně.

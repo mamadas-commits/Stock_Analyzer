@@ -1,0 +1,17 @@
+{
+ "from": [
+  "1.0.1"
+ ],
+ "to": "1.0.2",
+ "delete": [
+  "app/.next/server/chunks/[externals]__0h86f6-._.js",
+  "app/.next/server/chunks/[externals]__0h86f6-._.js.map",
+  "app/.next/server/chunks/[root-of-the-server]__01sxbm4._.js",
+  "app/.next/server/chunks/[root-of-the-server]__01sxbm4._.js.map",
+  "app/.next/static/chunks/0f4-q4ty7h95s.js",
+  "app/.next/static/nFYxXk62hUgC-pGE1aAAE/_buildManifest.js",
+  "app/.next/static/nFYxXk62hUgC-pGE1aAAE/_clientMiddlewareManifest.js",
+  "app/.next/static/nFYxXk62hUgC-pGE1aAAE/_ssgManifest.js"
+ ],
+ "nodeVersion": "24.21.0"
+}
